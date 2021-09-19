@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PasswordInputHistoryLogObject } from "../types/types";
 import { Col, Row, Typography } from "antd";
 import {
@@ -22,25 +22,55 @@ interface StatisticsProps {
 const Statistics = (props: StatisticsProps) => {
   const { inputLog } = props;
 
-  const intervalSelection = createIntervalSelection(inputLog);
-  const pressTimeSelection = createPressTimeSelection(inputLog);
+  const [intervalExpectedValue, setIntervalExpectedValue] = useState(0);
+  const [pressTimeExpectedValue, setPressTimeExpectedValue] = useState(0);
+  const [intervalDispersion, setIntervalDispersion] = useState(0);
+  const [pressTimeDispersion, setPressTimeDispersion] = useState(0);
+  const [pressTimeSum, setPressTimeSum] = useState(0);
+  const [gallopSuperposition, setGallopSuperposition] = useState(0);
+  const [absorptionSuperposition, setAbsorptionSuperposition] = useState(0);
 
-  const intervalExpectedValue = calculateExpectedValue(intervalSelection);
-  const pressTimeExpectedValue = calculateExpectedValue(pressTimeSelection);
+  const clearStatistics = () => {
+    setIntervalExpectedValue(0);
+    setPressTimeExpectedValue(0);
+    setIntervalDispersion(0);
+    setPressTimeDispersion(0);
+    setPressTimeSum(0);
+    setGallopSuperposition(0);
+    setAbsorptionSuperposition(0);
+  };
 
-  const intervalDispersion = calculateDispersion(
-    intervalSelection,
-    intervalExpectedValue
-  );
-  const pressTimeDispersion = calculateDispersion(
-    pressTimeSelection,
-    pressTimeExpectedValue
-  );
+  useEffect(() => {
+    if (inputLog.length === 0) {
+      clearStatistics();
+    } else {
+      const intervalSelection = createIntervalSelection(inputLog);
+      const pressTimeSelection = createPressTimeSelection(inputLog);
 
-  const pressTimeSum = calculatePressTimeSum(inputLog);
+      calculateExpectedValue(intervalSelection).then((expValue: any) =>
+        setIntervalExpectedValue(expValue)
+      );
+      calculateExpectedValue(pressTimeSelection).then((expValue: any) =>
+        setPressTimeExpectedValue(expValue)
+      );
 
-  const gallopSuperposition = calculateGallopSuperposition(inputLog);
-  const absorptionSuperposition = calculateAbsorptionSuperposition(inputLog);
+      calculateDispersion(intervalSelection, intervalExpectedValue).then(
+        (disp: any) => setIntervalDispersion(disp)
+      );
+      calculateDispersion(pressTimeSelection, pressTimeExpectedValue).then(
+        (pressTimeDisp: any) => setPressTimeDispersion(pressTimeDisp)
+      );
+
+      calculatePressTimeSum(inputLog).then((sum: any) => setPressTimeSum(sum));
+
+      calculateGallopSuperposition(inputLog).then((sup: any) =>
+        setGallopSuperposition(sup)
+      );
+      calculateAbsorptionSuperposition(inputLog).then((sup: any) =>
+        setAbsorptionSuperposition(sup)
+      );
+    }
+  }, [inputLog]);
 
   return (
     <>
@@ -70,7 +100,7 @@ const Statistics = (props: StatisticsProps) => {
           <StatisticTitle>Press Time Sum:</StatisticTitle>{" "}
           <StyledValue>{prettyMilliseconds(pressTimeSum, 2)}</StyledValue> ms
         </Col>
-        <Col span={8}/>
+        <Col span={8} />
       </StyledRow>
       <StyledRow>
         <Col span={8}>
@@ -106,7 +136,9 @@ const Statistics = (props: StatisticsProps) => {
         </Col>
         <Col span={8}>
           <StatisticTitle>Absorption:</StatisticTitle>{" "}
-          <StyledValue>{prettyMilliseconds(absorptionSuperposition, 2)}</StyledValue>{" "}
+          <StyledValue>
+            {prettyMilliseconds(absorptionSuperposition, 2)}
+          </StyledValue>{" "}
           ms
         </Col>
       </StyledRow>

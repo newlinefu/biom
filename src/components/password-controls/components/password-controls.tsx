@@ -7,6 +7,7 @@ import {
 } from "../types/types";
 import styled from "styled-components";
 import Charts from "./charts";
+import Statistics from "./statistics";
 
 const { Panel } = Collapse;
 
@@ -38,9 +39,11 @@ const PasswordControls = (props: PasswordControlsInterface) => {
             value={inputValue}
             onChange={(e) => onValueChanged(e.target.value)}
             onKeyDown={(e) =>
-              onKeyDown({ key: e.key, keyDownTime: Date.now() })
+              onKeyDown({ key: e.key, code: e.code, keyDownTime: Date.now() })
             }
-            onKeyUp={(e) => onKeyUp({ key: e.key, keyUpTime: Date.now() })}
+            onKeyUp={(e) =>
+              onKeyUp({ key: e.key, code: e.code, keyUpTime: Date.now() })
+            }
           />
         </Col>
         <Col offset={4} span={2}>
@@ -53,8 +56,13 @@ const PasswordControls = (props: PasswordControlsInterface) => {
         </StatusCol>
       </StyledRow>
       <Collapse>
-        <Panel header={'Dynamic'} key={1}>
+        <Panel header={"Dynamic"} key={1}>
           <Charts inputLog={inputLog} />
+        </Panel>
+      </Collapse>
+      <Collapse>
+        <Panel header={"Statistics"} key={1}>
+          <Statistics inputLog={inputLog} />
         </Panel>
       </Collapse>
     </>

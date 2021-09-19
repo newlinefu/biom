@@ -15,13 +15,13 @@ const Charts = (props: ChartProps) => {
     },
     xAxis: {
       title: {
-        text: "Time",
+        text: "Key",
       },
       categories: inputLog.map((record) => record.key),
     },
     yAxis: {
       title: {
-        text: "",
+        text: "Hold time",
       },
     },
     series: [
@@ -49,17 +49,17 @@ const Charts = (props: ChartProps) => {
 
   const intervalOptions: Highcharts.Options = {
     title: {
-      text: "Dynamic",
+      text: "Intervals",
     },
     xAxis: {
       title: {
-        text: "Time",
+        text: "Keys state transition",
       },
       categories: intervalsLegend,
     },
     yAxis: {
       title: {
-        text: "",
+        text: "Interval",
       },
     },
     series: [

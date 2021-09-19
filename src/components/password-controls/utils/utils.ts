@@ -14,14 +14,14 @@ const insertUpTimeToLog = (
   upInformation: PasswordKeyUpInterface
 ): PasswordInputHistoryLogObject[] => {
   let copiedLog = [...log];
-  const { key, keyUpTime } = upInformation;
+  const { code, keyUpTime } = upInformation;
 
   for (let i = 0; i < copiedLog.length; i++) {
     const actualLogRecord = copiedLog[i];
-    if (actualLogRecord.key === key && actualLogRecord.keyUpTime === 0) {
+    if (actualLogRecord.code === code && actualLogRecord.keyUpTime === 0) {
       copiedLog[i] = { ...copiedLog[i], keyUpTime };
       copiedLog = copiedLog.filter((record) => {
-        return !(record.key === key && record.keyUpTime === 0);
+        return !(record.code === code && record.keyUpTime === 0);
       });
       break;
     }
@@ -56,7 +56,10 @@ const calculatePasswordComplexity = (password: string) => {
   complexity += containsSymbolFromAlph(engUpperAlph)(password) ? 1 : 0;
   complexity += containsSymbolFromAlph(specSymbols)(password) ? 1 : 0;
 
-  return Math.floor(+(complexity / 7).toFixed(2) * 100)
+  return Math.floor(+(complexity / 7).toFixed(2) * 100);
 };
 
-export { insertUpTimeToLog, calculatePasswordComplexity };
+const prettyMilliseconds = (data: number, digits: number): string =>
+  data.toFixed(digits);
+
+export { insertUpTimeToLog, calculatePasswordComplexity, prettyMilliseconds };

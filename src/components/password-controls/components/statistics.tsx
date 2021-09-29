@@ -47,22 +47,24 @@ const Statistics = (props: StatisticsProps) => {
       const intervalSelection = createIntervalSelection(inputLog);
       const pressTimeSelection = createPressTimeSelection(inputLog);
 
-      calculateExpectedValue(intervalSelection).then((expValue: any) =>
-        setIntervalExpectedValue(expValue)
-      );
-      calculateExpectedValue(pressTimeSelection).then((expValue: any) =>
-        setPressTimeExpectedValue(expValue)
-      );
+      calculateExpectedValue(intervalSelection)
+        .then((expValue: any) => {
+          setIntervalExpectedValue(expValue);
+          return expValue;
+        })
+        .then((expValue) => calculateDispersion(intervalSelection, expValue))
+        .then((disp: any) => setIntervalDispersion(disp));
 
-      calculateDispersion(intervalSelection, intervalExpectedValue).then(
-        (disp: any) => setIntervalDispersion(disp)
-      );
-      calculateDispersion(pressTimeSelection, pressTimeExpectedValue).then(
-        (pressTimeDisp: any) => setPressTimeDispersion(pressTimeDisp)
-      );
-
+      calculateExpectedValue(pressTimeSelection)
+        .then((expValue: any) => {
+          setPressTimeExpectedValue(expValue);
+          return expValue;
+        })
+        .then((expValue) =>
+          calculateDispersion(pressTimeSelection, expValue)
+        )
+        .then((disp: any) => setPressTimeDispersion(disp));
       calculatePressTimeSum(inputLog).then((sum: any) => setPressTimeSum(sum));
-
       calculateGallopSuperposition(inputLog).then((sup: any) =>
         setGallopSuperposition(sup)
       );

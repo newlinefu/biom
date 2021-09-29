@@ -9,6 +9,7 @@ const engLowerAlph = "abcdefghijklmnopqrstuvwxyz";
 const engUpperAlph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const specSymbols = `~!@#$%^&*{}[]\`|/\\?.,><'":;`;
 
+
 const insertUpTimeToLog = (
   log: PasswordInputHistoryLogObject[],
   upInformation: PasswordKeyUpInterface

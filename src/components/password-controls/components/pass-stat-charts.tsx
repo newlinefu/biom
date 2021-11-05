@@ -7,7 +7,7 @@ interface ChartProps {
   readonly inputLog: PasswordInputHistoryLogObject[];
 }
 
-const Charts = (props: ChartProps) => {
+const PassStatCharts = (props: ChartProps) => {
   const { inputLog } = props;
   const dynamicOptions: Highcharts.Options = {
     title: {
@@ -89,4 +89,4 @@ const Charts = (props: ChartProps) => {
   );
 };
 
-export default Charts;
+export default PassStatCharts;

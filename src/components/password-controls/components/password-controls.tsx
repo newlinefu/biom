@@ -6,7 +6,7 @@ import {
   PasswordKeyUpInterface,
 } from "../types/types";
 import styled from "styled-components";
-import Charts from "./charts";
+import PassStatCharts from "./pass-stat-charts";
 import Statistics from "./statistics";
 import VectorCalculatingInformation from "../containers/registration-form";
 
@@ -58,7 +58,7 @@ const PasswordControls = (props: PasswordControlsInterface) => {
       </StyledRow>
       <Collapse>
         <Panel header={"Dynamic"} key={1}>
-          <Charts inputLog={inputLog} />
+          <PassStatCharts inputLog={inputLog} />
         </Panel>
       </Collapse>
       <Collapse>

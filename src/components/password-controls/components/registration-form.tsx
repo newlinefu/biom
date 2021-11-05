@@ -11,6 +11,7 @@ import { Button, Col, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
 import VectorCalculationInfo from "./vector-calculation-info";
 import styled from "styled-components";
+import VectorChart from "./vector-chart";
 
 interface RegistrationFormProps {
   inputLog: PasswordInputHistoryLogObject[];
@@ -76,9 +77,15 @@ const RegistrationForm = (props: RegistrationFormProps) => {
         </StyledButton>
       </FormContentWrapper>
       {vectorCalculatingResult && (
-        <VectorCalculationInfo
-          vectorCalculatingResult={vectorCalculatingResult}
-        />
+        <>
+          <VectorCalculationInfo
+            vectorCalculatingResult={vectorCalculatingResult}
+          />
+          <VectorChart
+            inputLog={inputLog}
+            amplitude={vectorCalculatingResult.information.amplitude}
+          />
+        </>
       )}
     </Form>
   );

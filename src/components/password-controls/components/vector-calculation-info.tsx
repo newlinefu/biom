@@ -23,30 +23,29 @@ interface LineSumCalculationResultProps {
 
 const VectorCalculationInfo = (props: VectorCalculationInfoProps) => {
   const { vectorCalculatingResult } = props;
-
   return (
-    <div>
+    <VectorCalculationContainer>
       {vectorCalculatingResult.vector.map((singleValue, index) => (
         <>
           <SingleLineOutputRenderer
-              harResults={
-                vectorCalculatingResult.information.holdTimeCalculating[index]
-                    .harResult
-              }
-              vectorLineResult={singleValue}
-              functionLineResult={
-                vectorCalculatingResult.information.functionsResult[index]
-              }
-              index={index}
-              N={vectorCalculatingResult.information.pressCount}
-              holdTime={
-                vectorCalculatingResult.information.holdTimeCalculating[index]
-                    .holdTime[index]
-              }
+            harResults={
+              vectorCalculatingResult.information.holdTimeCalculating[index]
+                .harResult
+            }
+            vectorLineResult={singleValue}
+            functionLineResult={
+              vectorCalculatingResult.information.functionsResult[index]
+            }
+            index={index}
+            N={vectorCalculatingResult.information.pressCount}
+            holdTime={
+              vectorCalculatingResult.information.holdTimeCalculating[index]
+                .holdTime[index]
+            }
           />
         </>
       ))}
-    </div>
+    </VectorCalculationContainer>
   );
 };
 
@@ -62,30 +61,48 @@ const SingleLineOutputRenderer = (props: SingleLineOutputRendererProps) => {
 
   return (
     <LineRendererWrapper>
-        <SpanWithSpaces>[{index}]</SpanWithSpaces>
-        <RedText>[v <Index>{index}</Index> = {vectorLineResult.toFixed(3)}]</RedText>
-        <SpanWithSpaces>=</SpanWithSpaces>
-        <BlueText>1&nbsp;/&nbsp;[N = {N}] </BlueText>
-        <RedText>(</RedText>
-        <GreenText>[f({holdTime}) = {functionLineResult}]</GreenText>
-        <GreyText>(</GreyText>
-        <LineSumCalculationResult harResults={harResults} holdTime={holdTime} externalIndex={index}/>
-        <GreyText>)</GreyText>
-        <RedText>)</RedText>
+      <SpanWithSpaces>[{index}]</SpanWithSpaces>
+      <RedText>
+        [v <Index>{index}</Index> = {vectorLineResult.toFixed(3)}]
+      </RedText>
+      <SpanWithSpaces>=</SpanWithSpaces>
+      <BlueText>1&nbsp;/&nbsp;[N = {N}] </BlueText>
+      <RedText>(</RedText>
+      <GreenText>
+        [f({holdTime}) = {functionLineResult}]
+      </GreenText>
+      <GreyText>(</GreyText>
+      <LineSumCalculationResult
+        harResults={harResults}
+        holdTime={holdTime}
+        externalIndex={index}
+      />
+      <GreyText>)</GreyText>
+      <RedText>)</RedText>
     </LineRendererWrapper>
   );
 };
 
 const LineSumCalculationResult = (props: LineSumCalculationResultProps) => {
-  const {harResults, holdTime, externalIndex} = props
-  return <>
-    {
-      harResults.map((har, index, array) => <>
-        <OrangeText>[h <Index>{index}&nbsp;{externalIndex}</Index>({holdTime}) = {har.toFixed(3)}]</OrangeText>
-        <span style={{color: 'brown', fontSize: '22px'}}>{index !== array.length - 1 && '+'}</span>
-      </>)
-    }
-  </>
+  const { harResults, holdTime, externalIndex } = props;
+  return (
+    <>
+      {harResults.map((har, index, array) => (
+        <>
+          <OrangeText>
+            [haar&nbsp;
+            <Index>
+              {index}&nbsp;{externalIndex}
+            </Index>
+            ({holdTime}) = {har.toFixed(3)}]
+          </OrangeText>
+          <span style={{ color: "brown", fontSize: "22px" }}>
+            {index !== array.length - 1 && "+"}
+          </span>
+        </>
+      ))}
+    </>
+  );
 };
 
 const SpanWithSpaces = styled.span`
@@ -95,7 +112,7 @@ const SpanWithSpaces = styled.span`
 const Index = styled.span`
   margin-right: 10px;
   font-size: 11px;
-`
+`;
 const RedText = styled(SpanWithSpaces)`
   color: crimson;
 `;
@@ -117,5 +134,8 @@ const OrangeText = styled(SpanWithSpaces)`
 const LineRendererWrapper = styled.div`
   padding: 20px;
   border-bottom: 2px solid lightslategrey;
-`
+`;
+const VectorCalculationContainer = styled.div`
+  margin: 40px 0;
+`;
 export default VectorCalculationInfo;

@@ -8,6 +8,7 @@ import {
 import styled from "styled-components";
 import Charts from "./charts";
 import Statistics from "./statistics";
+import VectorCalculatingInformation from "../containers/registration-form";
 
 const { Panel } = Collapse;
 
@@ -61,8 +62,13 @@ const PasswordControls = (props: PasswordControlsInterface) => {
         </Panel>
       </Collapse>
       <Collapse>
-        <Panel header={"Statistics"} key={1}>
+        <Panel header={"Statistics"} key={2}>
           <Statistics inputLog={inputLog} />
+        </Panel>
+      </Collapse>
+      <Collapse>
+        <Panel header={"Registration and vector information displaying"} key={3}>
+          <VectorCalculatingInformation />
         </Panel>
       </Collapse>
     </>

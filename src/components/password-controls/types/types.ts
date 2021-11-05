@@ -1,7 +1,7 @@
 export enum FormFiledNames {
-  Name = 'name',
-  Password = 'password',
-  Email = 'email'
+  Name = "name",
+  Password = "password",
+  Email = "email",
 }
 
 export interface PasswordKeyDownInterface {
@@ -21,14 +21,17 @@ export interface PasswordInputHistoryLogObject
 
 export interface SingleHoldCalculatingInformation {
   harResult: number[];
-  holdTime: number;
+  holdTime: number[];
 }
 
 export interface VectorCalculatingResultData {
-  amplitude: number;
-  pressCount: number;
-  functionsResult: number[];
-  holdTimeCalculating: SingleHoldCalculatingInformation[];
+  vector: number[];
+  information: {
+    amplitude: number;
+    pressCount: number;
+    functionsResult: number[];
+    holdTimeCalculating: SingleHoldCalculatingInformation[];
+  };
 }
 
 export interface RegistrationObject {

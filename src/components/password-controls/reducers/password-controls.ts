@@ -10,6 +10,10 @@ import {
   PasswordControlsAction,
 } from "../actions/password-controls-actions";
 import { calculatePasswordComplexity, insertUpTimeToLog } from "../utils/utils";
+import {
+  VECTOR_CALCULATING_SUCCESS,
+  VectorCalculatingAction,
+} from "../actions/vector-calculating";
 
 export interface PasswordControlsStateInterface {
   readonly inputValue: string;
@@ -27,9 +31,15 @@ const initialState: PasswordControlsStateInterface = {
 
 const passwordControlsReducer = (
   state: PasswordControlsStateInterface = initialState,
-  action: PasswordControlsAction
+  action: PasswordControlsAction | VectorCalculatingAction
 ) => {
   switch (action.type) {
+    case VECTOR_CALCULATING_SUCCESS: {
+      return {
+        ...state,
+        vectorCalculatingResult: action.payload,
+      };
+    }
     case VALUE_CHANGED: {
       const { payload } = action;
       if (payload === "") {

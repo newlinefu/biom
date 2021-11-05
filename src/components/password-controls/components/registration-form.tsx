@@ -9,6 +9,8 @@ import {
 } from "../types/types";
 import { Button, Col, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
+import VectorCalculationInfo from "./vector-calculation-info";
+import styled from "styled-components";
 
 interface RegistrationFormProps {
   inputLog: PasswordInputHistoryLogObject[];
@@ -38,15 +40,19 @@ const RegistrationForm = (props: RegistrationFormProps) => {
         const { [FormFiledNames.Name]: name, [FormFiledNames.Email]: email } =
           values;
 
-        calculateVector({
-          name,
-          email,
-          records: inputLog,
-          password: inputValue,
-        });
+        if (name && email && inputValue) {
+          calculateVector({
+            name,
+            email,
+            records: inputLog,
+            password: inputValue,
+          });
+        } else {
+          alert("Fill out all fields, please");
+        }
       }}
     >
-      <Col>
+      <FormContentWrapper>
         <Form.Item name={FormFiledNames.Name}>
           <Input />
         </Form.Item>
@@ -65,12 +71,28 @@ const RegistrationForm = (props: RegistrationFormProps) => {
             onKeyUp({ key: e.key, code: e.code, keyUpTime: Date.now() })
           }
         />
-      </Col>
-      <Button htmlType="submit" type="primary">
-        Register
-      </Button>
+        <StyledButton htmlType="submit" type="primary">
+          Register
+        </StyledButton>
+      </FormContentWrapper>
+      {vectorCalculatingResult && (
+        <VectorCalculationInfo
+          vectorCalculatingResult={vectorCalculatingResult}
+        />
+      )}
     </Form>
   );
 };
+
+const FormContentWrapper = styled(Col)`
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding-left: 30px;
+  padding-right: 180px;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 20px;
+`;
 
 export default RegistrationForm;

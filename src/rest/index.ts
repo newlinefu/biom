@@ -1,3 +1,3 @@
-import { registration } from "./vectors-registration";
+import { registration, authorization } from "./vectors-registration";
 
-export { registration };
+export { registration, authorization };

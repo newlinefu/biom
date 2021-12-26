@@ -40,3 +40,14 @@ export interface RegistrationObject {
   password: string;
   records: PasswordInputHistoryLogObject[];
 }
+
+export interface AuthorizationObject {
+  email: string;
+  password: string;
+  records: PasswordInputHistoryLogObject[];
+}
+
+export interface AuthorizeStatus {
+  message: string;
+  takenEmail: string;
+}

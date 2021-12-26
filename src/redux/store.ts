@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import passwordControlsReducer from "../components/password-controls/reducers/password-controls";
-import { watchVectorCalculatingAsync } from "../components/password-controls/sagas";
+import { watchVectorCalculatingAsync, watchAuthorizationAsync } from "../components/password-controls/sagas";
 
 const combinedReducers = combineReducers({
   passwordControls: passwordControlsReducer,
@@ -17,5 +17,6 @@ const store = createStore(
 );
 
 sagaMiddleware.run(watchVectorCalculatingAsync);
+sagaMiddleware.run(watchAuthorizationAsync);
 
 export default store;

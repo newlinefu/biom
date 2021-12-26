@@ -9,4 +9,9 @@ const registration = async (logs: any) => {
   return response.data;
 };
 
-export { registration };
+const authorization = async (data: any) => {
+  const response = await request.post("/v1/authorize", data);
+  return response.data;
+}
+
+export { registration, authorization };
